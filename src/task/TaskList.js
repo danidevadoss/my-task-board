@@ -5,15 +5,14 @@ import * as TaskStatus from './TaskStatus'
 import HighchartsWrapper from './Chart'
 
 class TaskList extends React.Component {
-    sequenceId = 1;
+  
     taskList = {
         yetToStart: [{
             id: 0,
             name: "Create Your Task",
             description: "Welcome.! Please create your task",
             priority: "High",
-            createdOn: "01/10/2019",
-            status: "yetToStart"
+            createdOn: "01/10/2019"
 
         }],
         inProgress: [],
@@ -46,27 +45,28 @@ class TaskList extends React.Component {
     }
 
     render() {
-        return (<div className="container task-width" >
+        return (<div className="container-fluid task-width" >
+             <h2 className="center" >My Task Board</h2>
             <div className="row" >
-                <div className="col-md-3 task-list" onDrop={(e) => this.dropYetToStart(e)} onDragOver={(e) => this.onDragOver(e)} >
+                <div className="col-lg-3 task-list" onDrop={(e) => this.dropYetToStart(e)} onDragOver={(e) => this.onDragOver(e)} >
                     <h3 className="center white">Yet To Start</h3>
                     {this.state.taskList.yetToStart.map((tsk) => (
-                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} onDraggedTask={this.onDraggedTask} />
+                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} status={"yetToStart"} onDraggedTask={this.onDraggedTask} />
                     ))}
                 </div>
-                <div className="col-md-3 task-list" onDrop={(e) => this.dropInProgress(e)} onDragOver={(e) => this.onDragOver(e)}>
+                <div className="col-lg-3 task-list" onDrop={(e) => this.dropInProgress(e)} onDragOver={(e) => this.onDragOver(e)}>
                     <h3 className="center white" >In Progress</h3>
                     {this.state.taskList.inProgress.map((tsk) => (
-                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} onDraggedTask={this.onDraggedTask} />
+                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} status={"inProgress"}  onDraggedTask={this.onDraggedTask} />
                     ))}
                 </div>
-                <div className="col-md-3 task-list" onDrop={(e) => this.dropComplete(e)} onDragOver={(e) => this.onDragOver(e)}>
+                <div className="col-lg-3 task-list" onDrop={(e) => this.dropComplete(e)} onDragOver={(e) => this.onDragOver(e)}>
                     <h3 className="center white" >Completed</h3>
                     {this.state.taskList.completed.map((tsk) => (
-                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} onDraggedTask={this.onDraggedTask} />
+                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} status={"completed"}  onDraggedTask={this.onDraggedTask} />
                     ))}
                 </div>
-                <div className="col-md-3">
+                <div className="col-lg-3">
                     <div>
                         <HighchartsWrapper chartData={this.state.series} />
                     </div>
@@ -77,7 +77,7 @@ class TaskList extends React.Component {
                                 <input type="text" value={this.state.name} onChange={(e) => this.setState({ name: this.stringInput(e) })} placeholder="Name" required className="form-control" id="task" />
                             </div>
                             <div className="form-group">
-                                <textarea className="form-control" value={this.state.description} onChange={(e) => this.setState({ description: this.stringInput(e) })} required placeholder="Description" rows="2" id="desc"></textarea>
+                                <textarea className="form-control" value={this.state.description} onChange={(e) => this.setState({ description: this.stringInput(e) })} placeholder="Description" rows="2" id="desc"></textarea>
                             </div>
                             <div className="form-group text-center">
                                 <label className="radio-inline margin-right">
@@ -119,14 +119,13 @@ class TaskList extends React.Component {
         console.log("createTask", e);
         e.preventDefault();
         let newTask = {
-            id: this.sequenceId,
+            id: Math.floor((Math.random() * 100000) + 1),
             name: this.state.name,
             description: this.state.description,
             priority: this.state.priority,
-            createdOn: this.getTodayDate(),
-            status: "yetToStart"
+            createdOn: this.getTodayDate()
         }
-        this.sequenceId++;
+      
         let taskList = this.state.taskList;
         taskList.yetToStart.push(newTask);
         this.setState({

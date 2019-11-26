@@ -11,3 +11,70 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+
+body{
+  background-color: #47475C !important;
+  color: white !important;
+} 
+
+.task{
+  margin: 15px;
+  /*border-style:solid;*/
+  padding: 10px;
+  cursor:pointer;
+}
+.yetToStart{
+  /*border-color: #3333cc;
+  color: #3333cc;*/
+  background-color: #4d9ce6
+ 
+}
+
+.inProgress{
+  /*border-color: #e6e600;
+  color: #e6e600;*/
+  background-color: #ddc722;
+}
+.completed{
+  /*border-color: #00cc00;
+  color: #00cc00;*/
+  background-color: #39ca1c;
+}
+.center{
+  text-align: center !important;
+}
+
+.task-width{
+  margin: 15px!important;
+}
+
+.white{
+  color: white !important;
+}
+
+.task-list{
+  border-style:solid;
+  border-color: rgb(155, 158, 158);
+  height: 850px;
+  overflow:auto;
+}
+
+.delete-button{
+  float: right;
+  margin-top: -9px;
+  margin-right: -1px;
+}
+
+.margin-top{
+  margin-top: 5%;
+}
+
+.margin-right{
+  margin-right: 10px;
+}
+
+.create-button{
+  margin-top: -21px !important;
+  padding: 2px 80px 5px 80px !important;
+}

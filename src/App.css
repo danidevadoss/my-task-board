@@ -1,94 +1,23 @@
 .App {
- /* text-align: center;*/
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  /*align-items: center;
-  justify-content: center;*/
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
-}
-
-body{
-  background-color: #47475C !important;
-  color: white !important;
-} 
-
-.task{
-  margin: 15px;
-  /*border-style:solid;*/
-  padding: 10px;
-  cursor:pointer;
-}
-.yetToStart{
-  /*border-color: #3333cc;
-  color: #3333cc;*/
-  background-color: #7cb5ec
+  /* text-align: center;*/
+ }
  
-}
-
-.inProgress{
-  /*border-color: #e6e600;
-  color: #e6e600;*/
-  background-color: #e4d354;
-}
-.completed{
-  /*border-color: #00cc00;
-  color: #00cc00;*/
-  background-color: #90ed7d;
-}
-.center{
-  text-align: center !important;
-}
-
-.task-width{
-  margin: 15px!important;
-}
-
-.white{
-  color: white !important;
-}
-
-.task-list{
-  border-style:solid;
-  border-color: rgb(155, 158, 158);
-  height: 650px;
-  overflow:auto;
-}
-
- @media (min-width: 1200px){
-  .container.task-width {
-    max-width: 1491px;
-  }
-} 
-
-.delete-button{
-  float: right;
-  margin-top: -9px;
-  margin-right: -1px;
-}
-
-.margin-top{
-  margin-top: 10px;
-}
-
-.margin-right{
-  margin-right: 10px;
-}
-
-.create-button{
-  margin-top: -21px !important;
-  padding: 2px 80px 5px 80px !important;
-}
+ .App-logo {
+   height: 40vmin;
+ }
+ 
+ .App-header {
+   background-color: #282c34;
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+   /*align-items: center;
+   justify-content: center;*/
+   font-size: calc(10px + 2vmin);
+   color: white;
+ }
+ 
+ .App-link {
+   color: #09d3ac;
+ }
+ 
