@@ -45,7 +45,7 @@ class TaskList extends React.Component {
     }
 
     render() {
-        return (<div className="container-fluid task-width" >
+        return (<div className="container-fluid" >
              <h2 className="center" >My Task Board</h2>
             <div className="row" >
                 <div className="col-lg-3 task-list" onDrop={(e) => this.dropYetToStart(e)} onDragOver={(e) => this.onDragOver(e)} >
