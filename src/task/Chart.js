@@ -26,7 +26,7 @@ const HighchartsWrapper = (props) => {
                     enabled: false,
                 },
                 showInLegend: true,
-                colors:['#7cb5ec','#e4d354','#90ed7d']
+                colors:['#4d9ce6','#ddc722','#39ca1c']
             },
            
         },
