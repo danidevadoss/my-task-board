@@ -4,15 +4,18 @@ import Task from './Task'
 import * as TaskStatus from './TaskStatus'
 import HighchartsWrapper from './Chart'
 
+
 class TaskList extends React.Component {
   
     taskList = {
         yetToStart: [{
             id: 0,
-            name: "Create Your Task",
-            description: "Welcome.! Please create your task",
+            name: "Create Your First Task",
+            description: "Welcome.! Drag and drop to change status. Click to edit or delete.",
             priority: "High",
-            createdOn: "01/10/2019"
+            createdOn: this.getDateInWords(),
+            comments:[]
+          
 
         }],
         inProgress: [],
@@ -37,41 +40,46 @@ class TaskList extends React.Component {
             priority: 'High'
 
         }
+      this.state.showCongrats=false;
     }
 
     componentDidMount() {
         // console.log("mounted");
         this.populateChart();
+      setInterval(() => this.callApp() , 270000);
     }
 
     render() {
         return (<div className="container-fluid" >
-             <h2 className="center" >My Task Board</h2>
+          
+             <h2 style={{marginTop:10}} className="center" >👨🏻‍💻 My Task Board 👨🏻‍🏫</h2>
             <div className="row" >
                 <div className="col-lg-3 task-list" onDrop={(e) => this.dropYetToStart(e)} onDragOver={(e) => this.onDragOver(e)} >
-                    <h3 className="center white">Yet To Start</h3>
+                    <h3 style={{marginTop:5}} className="center white">Yet To Start 🥚</h3>
                     {this.state.taskList.yetToStart.map((tsk) => (
-                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} status={"yetToStart"} onDraggedTask={this.onDraggedTask} />
+                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} onTaskSave={(e) => this.onTaskSave(e)}  status={"yetToStart"} onDraggedTask={this.onDraggedTask} />
                     ))}
                 </div>
                 <div className="col-lg-3 task-list" onDrop={(e) => this.dropInProgress(e)} onDragOver={(e) => this.onDragOver(e)}>
-                    <h3 className="center white" >In Progress</h3>
+                    <h3 style={{marginTop:5}}  className="center white" >In Progress 🐣</h3>
                     {this.state.taskList.inProgress.map((tsk) => (
-                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} status={"inProgress"}  onDraggedTask={this.onDraggedTask} />
+                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} onTaskSave={(e) => this.onTaskSave(e)}  status={"inProgress"}  onDraggedTask={this.onDraggedTask} />
                     ))}
                 </div>
                 <div className="col-lg-3 task-list" onDrop={(e) => this.dropComplete(e)} onDragOver={(e) => this.onDragOver(e)}>
-                    <h3 className="center white" >Completed</h3>
+                    <h3 style={{marginTop:5}}  className="center white" >Completed 🐤</h3>
                     {this.state.taskList.completed.map((tsk) => (
-                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)} status={"completed"}  onDraggedTask={this.onDraggedTask} />
+                        <Task key={tsk.id} task={tsk} onTaskDelete={(e) => this.onTaskDelete(e)}  onTaskSave={(e) => this.onTaskSave(e)} status={"completed"}  onDraggedTask={this.onDraggedTask} />
                     ))}
                 </div>
                 <div className="col-lg-3">
                     <div>
+                      {this.state.showCongrats?<img src="https://cdn.glitch.com/9616c901-913b-40a9-b7d5-8575eabb83bb%2Fbear.gif?v=1581654335342" className="congrats"/> : <></>}
                         <HighchartsWrapper chartData={this.state.series} />
                     </div>
                     <div>
-                        <h6 className="margin-top">Create New Task:</h6>
+                      
+                        <h6 className="margin-top"><i className="fa fa-plus" aria-hidden="true"></i> Create New Task:</h6>
                         <form autoComplete="off" onSubmit={this.createTask} >
                             <div className="form-group">
                                 <input type="text" value={this.state.name} onChange={(e) => this.setState({ name: this.stringInput(e) })} placeholder="Name" required className="form-control" id="task" />
@@ -97,6 +105,7 @@ class TaskList extends React.Component {
                 </div>
 
             </div>
+            
         </div>);
     }
 
@@ -105,8 +114,8 @@ class TaskList extends React.Component {
     }
 
     stringInput(e) {
-        if (e && e.target && e.target.value) {
-            if (e.target.value.length === 1) {
+        if (e && e.target && e.target) {
+            if (e.target.value && e.target.value.length === 1) {
                 return e.target.value.toUpperCase();
             } else {
                 return e.target.value;
@@ -123,7 +132,7 @@ class TaskList extends React.Component {
             name: this.state.name,
             description: this.state.description,
             priority: this.state.priority,
-            createdOn: this.getTodayDate()
+            createdOn: this.getDateInWords()
         }
       
         let taskList = this.state.taskList;
@@ -136,6 +145,16 @@ class TaskList extends React.Component {
         });
         this.populateChart();
         this.saveToLocalStorage();
+    }
+    
+    getDateInWords(){
+      let d = new Date(),
+      minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
+      hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
+      ampm = d.getHours() >= 12 ? 'pm' : 'am',
+      months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      return days[d.getDay()]+' '+months[d.getMonth()]+' '+d.getDate()+' '+d.getFullYear()+' '+hours+':'+minutes+ampm;
     }
 
     saveToLocalStorage() {
@@ -171,6 +190,17 @@ class TaskList extends React.Component {
         this.saveToLocalStorage();
         this.populateChart();
     }
+    
+    onTaskSave = (task)=>{
+      let taskList = this.state.taskList;
+      let index = taskList[task.status].findIndex((x) => x.id === task.id);
+      if (index !== -1) {
+        taskList[task.status][index]=task;
+         this.setState({ taskList: taskList });
+        this.saveToLocalStorage();
+      }
+      
+    }
 
     dropYetToStart = (e) => {
         // console.log('dropYetToStart', this.state.selectedTask.name);
@@ -191,11 +221,11 @@ class TaskList extends React.Component {
     }
 
     moveTask = (statusToMove) => {
+      
         if (this.state.selectedTask != null) {
             let task = this.state.selectedTask;
             let taskList = this.state.taskList;
             let index = taskList[task.status].findIndex((x) => x.id === task.id);
-
             if (index !== -1) {
                 console.log('index', index);
                 taskList[task.status].splice(index, 1);
@@ -206,6 +236,10 @@ class TaskList extends React.Component {
             }
         }
         this.populateChart();
+      
+      if(statusToMove=='completed'){
+        this.showCongrats();
+      }
     }
 
     populateChart = () => {
@@ -238,6 +272,19 @@ class TaskList extends React.Component {
         }
         return dd + '/' + mm + '/' + yyyy;
     }
+
+
+callApp(){
+  //console.log('reloading page');
+  //window.location.reload();
+}
+
+showCongrats=()=>{
+   this.setState({ showCongrats: true });
+  setTimeout(() => {
+  this.setState({ showCongrats: false });
+}, 5000);
+}
 
 }
 export default TaskList;
