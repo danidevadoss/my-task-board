@@ -63,7 +63,7 @@ body{
 .delete-button{
   float: right;
   margin-top: -9px;
-  margin-right: -1px;
+  margin-right: 6px;
 }
 
 .margin-top{
@@ -77,4 +77,20 @@ body{
 .create-button{
   margin-top: -21px !important;
   padding: 2px 80px 5px 80px !important;
+}
+
+.edit-button{
+  float: right;
+  margin-top: -9px;
+  margin-right: -1px;
+  padding-right: 19px
+}
+
+.congrats{
+  	width: 27%;
+    height: 15%;
+    position: absolute;
+    margin-left: 31%;
+    margin-top: 25%;
+    z-index: 10000;
 }
